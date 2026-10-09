@@ -1,0 +1,17 @@
+@model ConfiguracionSistema
+@{
+    ViewData["Title"] = "Configuración";
+}
+<h2 class="page-title mb-3">Configuración</h2>
+<div class="card" style="max-width: 500px;"><div class="card-body">
+    <form asp-action="Index" method="post" data-once>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <div class="mb-3">
+            <label asp-for="PorcentajeImpuesto" class="form-label"></label>
+            <input asp-for="PorcentajeImpuesto" type="number" step="0.01" min="0" max="100" class="form-control" />
+            <span asp-validation-for="PorcentajeImpuesto" class="text-danger small"></span>
+            <div class="form-text">Se aplica a las nuevas ventas. Las facturas ya emitidas conservan el porcentaje con el que se registraron. Configure el valor que corresponda a su caso; el sistema no asume un tratamiento fiscal.</div>
+        </div>
+        <button type="submit" class="btn btn-gold"><i class="bi bi-check-lg"></i> Guardar</button>
+    </form>
+</div></div>

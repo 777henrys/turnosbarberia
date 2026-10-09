@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Reportes";
+}
+<h2 class="page-title mb-3">Reportes</h2>
+<p class="text-secondary">Los reportes se generan con los datos reales almacenados en la base de datos y se descargan en PDF o Excel.</p>
+
+<div class="row g-3">
+    <div class="col-lg-4">
+        <div class="card h-100"><div class="card-body">
+            <h5><i class="bi bi-calendar-check text-gold"></i> Turnos por fecha</h5>
+            <form method="get" asp-action="Generar">
+                <input type="hidden" name="reporte" value="turnos" />
+                <label class="form-label">Fecha</label>
+                <input type="date" name="fecha" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control mb-3" required />
+                <button type="submit" name="formato" value="pdf" class="btn btn-dark"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
+                <button type="submit" name="formato" value="excel" class="btn btn-outline-dark"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+            </form>
+        </div></div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100"><div class="card-body">
+            <h5><i class="bi bi-receipt text-gold"></i> Ventas por período</h5>
+            <form method="get" asp-action="Generar">
+                <input type="hidden" name="reporte" value="ventas" />
+                <div class="row">
+                    <div class="col-6 mb-3"><label class="form-label">Desde</label><input type="date" name="desde" value="@DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd")" class="form-control" required /></div>
+                    <div class="col-6 mb-3"><label class="form-label">Hasta</label><input type="date" name="hasta" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" required /></div>
+                </div>
+                <button type="submit" name="formato" value="pdf" class="btn btn-dark"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
+                <button type="submit" name="formato" value="excel" class="btn btn-outline-dark"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+            </form>
+        </div></div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100"><div class="card-body">
+            <h5><i class="bi bi-box-seam text-gold"></i> Productos y existencias</h5>
+            <p class="text-secondary small">Incluye precio, cantidad, stock mínimo y situación de cada producto.</p>
+            <form method="get" asp-action="Generar">
+                <input type="hidden" name="reporte" value="productos" />
+                <button type="submit" name="formato" value="pdf" class="btn btn-dark"><i class="bi bi-file-earmark-pdf"></i> PDF</button>
+                <button type="submit" name="formato" value="excel" class="btn btn-outline-dark"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+            </form>
+        </div></div>
+    </div>
+</div>

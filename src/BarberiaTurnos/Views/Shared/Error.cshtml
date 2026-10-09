@@ -1,0 +1,14 @@
+@model string
+@{
+    ViewData["Title"] = "Error";
+}
+<div class="text-center py-5">
+    <i class="bi bi-exclamation-octagon display-1 text-danger"></i>
+    <h2 class="mt-3">Ocurrió un error</h2>
+    <p class="text-secondary">No se pudo completar la operación. Intente nuevamente o contacte al administrador.</p>
+    @if (!string.IsNullOrEmpty(Model))
+    {
+        <p class="small text-muted">Código de solicitud: <code>@Model</code></p>
+    }
+    <a class="btn btn-gold" asp-controller="Home" asp-action="Index">Volver al inicio</a>
+</div>

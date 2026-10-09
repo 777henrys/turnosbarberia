@@ -1,0 +1,24 @@
+@model ReprogramarViewModel
+@{
+    ViewData["Title"] = "Reprogramar turno";
+}
+<h2 class="page-title mb-3">Reprogramar turno</h2>
+<div class="card" style="max-width: 600px;"><div class="card-body">
+    <p class="text-secondary">@Model.Resumen</p>
+    <form asp-action="Reprogramar" method="post" data-once>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="BarberoId" class="form-label"></label>
+            <select asp-for="BarberoId" asp-items="Model.Barberos" class="form-select"></select>
+            <span asp-validation-for="BarberoId" class="text-danger small"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FechaHora" class="form-label"></label>
+            <input asp-for="FechaHora" type="datetime-local" class="form-control" />
+            <span asp-validation-for="FechaHora" class="text-danger small"></span>
+        </div>
+        <button type="submit" class="btn btn-gold"><i class="bi bi-check-lg"></i> Guardar cambios</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+</div></div>

@@ -1,0 +1,65 @@
+@model VentaCreateViewModel
+@{
+    ViewData["Title"] = "Nueva venta";
+}
+<h2 class="page-title mb-3">Nueva venta</h2>
+
+<div id="venta-app" data-impuesto="@Model.PorcentajeImpuesto.ToString(CultureInfo.InvariantCulture)">
+<form id="venta-form" asp-action="Create" method="post" data-once>
+    <input type="hidden" asp-for="Token" />
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <div id="venta-msg" class="alert alert-danger d-none"></div>
+
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card mb-3"><div class="card-body">
+                <div class="mb-3">
+                    <label asp-for="ClienteId" class="form-label">Cliente (opcional)</label>
+                    <select asp-for="ClienteId" asp-items="Model.Clientes" class="form-select"><option value="">Consumidor final</option></select>
+                </div>
+                <div class="row g-2 align-items-end">
+                    <div class="col-12 col-md-7">
+                        <label class="form-label" for="item-select">Servicio o producto</label>
+                        <select id="item-select" class="form-select"></select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label" for="item-cantidad">Cantidad</label>
+                        <input id="item-cantidad" type="number" min="1" step="1" value="1" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <button type="button" id="btn-agregar" class="btn btn-dark w-100"><i class="bi bi-plus-lg"></i> Agregar</button>
+                    </div>
+                </div>
+            </div></div>
+
+            <div class="table-responsive">
+                <table class="table align-middle mb-0" id="tabla-lineas">
+                    <thead><tr><th>Descripción</th><th>Tipo</th><th class="text-end">Cant.</th><th class="text-end">Precio</th><th class="text-end">Subtotal</th><th></th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="lineas-hidden"></div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card"><div class="card-body">
+                <h5 class="mb-3">Resumen</h5>
+                <div class="d-flex justify-content-between"><span>Subtotal</span><span id="r-subtotal">0.00</span></div>
+                <div class="d-flex justify-content-between"><span>Impuesto (@Model.PorcentajeImpuesto.ToString("0.##")%)</span><span id="r-impuesto">0.00</span></div>
+                <hr />
+                <div class="d-flex justify-content-between fs-5 fw-bold"><span>Total</span><span>RD$ <span id="r-total">0.00</span></span></div>
+                <button type="submit" id="btn-guardar" class="btn btn-gold w-100 mt-3"><i class="bi bi-check-lg"></i> Registrar venta</button>
+                <a asp-action="Index" class="btn btn-outline-secondary w-100 mt-2">Cancelar</a>
+                <p class="small text-secondary mt-3 mb-0">Los precios y el stock se validan nuevamente en el servidor al registrar la venta.</p>
+            </div></div>
+        </div>
+    </div>
+</form>
+</div>
+
+<script type="application/json" id="catalogo-data">@Json.Serialize(Model.Catalogo)</script>
+<script type="application/json" id="lineas-data">@Json.Serialize(Model.Lineas)</script>
+
+@section Scripts {
+    <script src="~/js/ventas.js" asp-append-version="true"></script>
+}

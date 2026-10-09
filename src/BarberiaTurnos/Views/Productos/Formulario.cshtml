@@ -1,0 +1,41 @@
+@model Producto
+@{
+    var nuevo = Model.Id == 0;
+    ViewData["Title"] = nuevo ? "Nuevo producto" : "Editar producto";
+}
+<h2 class="page-title mb-3">@ViewData["Title"]</h2>
+<div class="card" style="max-width: 650px;"><div class="card-body">
+    <form asp-action="@(nuevo ? "Create" : "Edit")" method="post" data-once>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input asp-for="Nombre" class="form-control" maxlength="100" />
+            <span asp-validation-for="Nombre" class="text-danger small"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label"></label>
+            <textarea asp-for="Descripcion" class="form-control" rows="2" maxlength="300"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger small"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label asp-for="Precio" class="form-label"></label>
+                <input asp-for="Precio" type="number" step="0.01" min="0.01" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger small"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="Cantidad" class="form-label"></label>
+                <input asp-for="Cantidad" type="number" step="1" min="0" class="form-control" />
+                <span asp-validation-for="Cantidad" class="text-danger small"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="StockMinimo" class="form-label"></label>
+                <input asp-for="StockMinimo" type="number" step="1" min="0" class="form-control" />
+                <span asp-validation-for="StockMinimo" class="text-danger small"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-gold"><i class="bi bi-check-lg"></i> Guardar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+</div></div>

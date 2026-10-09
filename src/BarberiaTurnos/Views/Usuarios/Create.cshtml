@@ -1,0 +1,43 @@
+@model UsuarioCreateViewModel
+@{
+    ViewData["Title"] = "Nuevo usuario";
+}
+<h2 class="page-title mb-3">Nuevo usuario</h2>
+<div class="card" style="max-width: 600px;"><div class="card-body">
+    <form asp-action="Create" method="post" data-once>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <div class="mb-3">
+            <label asp-for="NombreCompleto" class="form-label"></label>
+            <input asp-for="NombreCompleto" class="form-control" />
+            <span asp-validation-for="NombreCompleto" class="text-danger small"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="ConfirmarPassword" class="form-label"></label>
+                <input asp-for="ConfirmarPassword" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="ConfirmarPassword" class="text-danger small"></span>
+            </div>
+        </div>
+        <div class="form-text mb-3">Mínimo 8 caracteres, con mayúscula, minúscula y número.</div>
+        <div class="mb-3">
+            <label asp-for="Rol" class="form-label">Rol</label>
+            <select asp-for="Rol" class="form-select">
+                <option value="@Roles.Empleado">Empleado</option>
+                <option value="@Roles.Administrador">Administrador</option>
+            </select>
+            <span asp-validation-for="Rol" class="text-danger small"></span>
+        </div>
+        <button type="submit" class="btn btn-gold"><i class="bi bi-check-lg"></i> Crear usuario</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+</div></div>

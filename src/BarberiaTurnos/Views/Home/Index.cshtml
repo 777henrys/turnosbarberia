@@ -1,0 +1,87 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+<h2 class="page-title mb-3">Panel principal</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl">
+        <div class="card stat-card h-100"><div class="card-body">
+            <div class="text-secondary small"><i class="bi bi-people"></i> Clientes</div>
+            <div class="valor">@Model.TotalClientes</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="card stat-card h-100"><div class="card-body">
+            <div class="text-secondary small"><i class="bi bi-person-badge"></i> Barberos activos</div>
+            <div class="valor">@Model.BarberosActivos</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="card stat-card h-100"><div class="card-body">
+            <div class="text-secondary small"><i class="bi bi-calendar-check"></i> Turnos pendientes hoy</div>
+            <div class="valor">@Model.TurnosPendientesHoy</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-xl">
+        <div class="card stat-card h-100"><div class="card-body">
+            <div class="text-secondary small"><i class="bi bi-cash-coin"></i> Ventas del día (@Model.CantidadVentasHoy)</div>
+            <div class="valor">RD$ @Model.VentasHoy.ToString("N2")</div>
+        </div></div>
+    </div>
+    <div class="col-12 col-xl">
+        <div class="card stat-card h-100 @(Model.ProductosStockBajo.Count > 0 ? "border-danger" : "")"><div class="card-body">
+            <div class="text-secondary small"><i class="bi bi-exclamation-triangle"></i> Productos con stock bajo</div>
+            <div class="valor @(Model.ProductosStockBajo.Count > 0 ? "text-danger" : "")">@Model.ProductosStockBajo.Count</div>
+        </div></div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <h5>Turnos de hoy</h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead><tr><th>Hora</th><th>Cliente</th><th>Barbero</th><th>Servicio</th><th>Estado</th></tr></thead>
+                <tbody>
+                @foreach (var t in Model.TurnosDeHoy)
+                {
+                    <tr>
+                        <td>@t.FechaHoraInicio.ToString("HH:mm") - @t.FechaHoraFin.ToString("HH:mm")</td>
+                        <td>@t.Cliente?.Nombre</td>
+                        <td>@t.Barbero?.Nombre</td>
+                        <td>@t.Servicio?.Nombre</td>
+                        <td>@t.Estado</td>
+                    </tr>
+                }
+                @if (Model.TurnosDeHoy.Count == 0)
+                {
+                    <tr><td colspan="5" class="text-center text-secondary py-4">No hay turnos para hoy.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <h5>Productos con pocas existencias</h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead><tr><th>Producto</th><th class="text-end">Disponible</th><th class="text-end">Mínimo</th></tr></thead>
+                <tbody>
+                @foreach (var p in Model.ProductosStockBajo)
+                {
+                    <tr>
+                        <td>@p.Nombre</td>
+                        <td class="text-end"><span class="badge text-bg-danger">@p.Cantidad</span></td>
+                        <td class="text-end">@p.StockMinimo</td>
+                    </tr>
+                }
+                @if (Model.ProductosStockBajo.Count == 0)
+                {
+                    <tr><td colspan="3" class="text-center text-secondary py-4">Todo el inventario está en niveles normales.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

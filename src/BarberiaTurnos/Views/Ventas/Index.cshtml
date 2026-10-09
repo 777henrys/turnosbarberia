@@ -1,0 +1,51 @@
+@model List<Venta>
+@{
+    ViewData["Title"] = "Ventas";
+    var desde = (DateTime)ViewData["Desde"]!;
+    var hasta = (DateTime)ViewData["Hasta"]!;
+}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h2 class="page-title">Ventas y facturación</h2>
+    <a class="btn btn-gold" asp-action="Create"><i class="bi bi-plus-lg"></i> Nueva venta</a>
+</div>
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-6 col-md-3">
+        <label class="form-label small mb-1">Desde</label>
+        <input type="date" name="desde" value="@desde.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-6 col-md-3">
+        <label class="form-label small mb-1">Hasta</label>
+        <input type="date" name="hasta" value="@hasta.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-auto"><button class="btn btn-dark"><i class="bi bi-search"></i> Consultar</button></div>
+</form>
+<div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead><tr><th>Factura</th><th>Fecha</th><th>Cliente</th><th>Registrada por</th><th class="text-end">Subtotal</th><th class="text-end">Impuesto</th><th class="text-end">Total</th><th></th></tr></thead>
+        <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.Numero</td>
+                <td>@v.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@(v.Cliente?.Nombre ?? "Consumidor final")</td>
+                <td>@(string.IsNullOrEmpty(v.Usuario?.NombreCompleto) ? v.Usuario?.UserName : v.Usuario!.NombreCompleto)</td>
+                <td class="text-end">@v.Subtotal.ToString("N2")</td>
+                <td class="text-end">@v.Impuesto.ToString("N2")</td>
+                <td class="text-end fw-semibold">@v.Total.ToString("N2")</td>
+                <td class="text-end"><a class="btn btn-sm btn-outline-dark" asp-action="Details" asp-route-id="@v.Id"><i class="bi bi-eye"></i> Ver</a></td>
+            </tr>
+        }
+        @if (Model.Count == 0)
+        {
+            <tr><td colspan="8" class="text-center text-secondary py-4">No hay ventas en el período seleccionado.</td></tr>
+        }
+        </tbody>
+        @if (Model.Count > 0)
+        {
+            <tfoot>
+                <tr class="table-light"><td colspan="6" class="text-end fw-semibold">Total del período</td><td class="text-end fw-bold">@Model.Sum(v => v.Total).ToString("N2")</td><td></td></tr>
+            </tfoot>
+        }
+    </table>
+</div>

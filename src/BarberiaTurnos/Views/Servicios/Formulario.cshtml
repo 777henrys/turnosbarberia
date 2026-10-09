@@ -1,0 +1,35 @@
+@model Servicio
+@{
+    var nuevo = Model.Id == 0;
+    ViewData["Title"] = nuevo ? "Nuevo servicio" : "Editar servicio";
+}
+<h2 class="page-title mb-3">@ViewData["Title"]</h2>
+<div class="card" style="max-width: 600px;"><div class="card-body">
+    <form asp-action="@(nuevo ? "Create" : "Edit")" method="post" data-once>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input asp-for="Nombre" class="form-control" maxlength="100" />
+            <span asp-validation-for="Nombre" class="text-danger small"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Precio" class="form-label"></label>
+                <input asp-for="Precio" type="number" step="0.01" min="0.01" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="DuracionMinutos" class="form-label"></label>
+                <input asp-for="DuracionMinutos" type="number" step="1" min="1" class="form-control" />
+                <span asp-validation-for="DuracionMinutos" class="text-danger small"></span>
+            </div>
+        </div>
+        <div class="form-check form-switch mb-3">
+            <input asp-for="Activo" class="form-check-input" />
+            <label asp-for="Activo" class="form-check-label">Activo</label>
+        </div>
+        <button type="submit" class="btn btn-gold"><i class="bi bi-check-lg"></i> Guardar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+</div></div>

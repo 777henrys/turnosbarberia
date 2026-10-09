@@ -1,0 +1,31 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+<div class="login-wrap">
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <div class="brand fs-2"><i class="bi bi-scissors"></i> Barbería</div>
+            <div class="text-secondary">Sistema de turnos</div>
+        </div>
+        <form asp-action="Login" method="post" data-once>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" autocomplete="username" autofocus />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="Recordarme" class="form-check-input" />
+                <label asp-for="Recordarme" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-gold w-100"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>
+        </form>
+    </div>
+</div>
